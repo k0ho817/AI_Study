@@ -211,7 +211,7 @@ fig.show(rederer='browser')
 
 > **다차원 특징 공간**  
 종이에 그릴 수 있는 공간은 3차원으로 제한되지만, 수학은 아주 높은 차원까지 다룰 수 있다. 예를 들어 2차원 상의 두 점 $\mathbf{x}=\mathrm{(x_1, x_2)}$와 $\mathbf{y}=\mathrm{(y_1, y_2)}$의 거리를 $d\mathbf{(x,y)}=\mathrm{\sqrt{(x_1-y_1)^2+(x_2-y_2)^2}}$으로 계산할 수 있는데, 4차원 상의 두 점 $\mathbf{x}=\mathrm{(x_1,x_2,x_3,x_4)}$와 $\mathbf{y}=\mathrm{(y_1,y_2,y_3,y_4)}$의 거리는 $d\mathbf{(x,y)}=\mathrm{\sqrt{(x_1-y_1)^2+(x_2-y_2)^2+(x_3-y_3)^2+(x_4-y_4)^2}}$로 계산할수 있다.  
-일반적으로 $d$차원 상의 두 점의 거리는 $d\mathbf{(x,y)}=\sqrt{\sum_{i=1}^d(\mathrm{x}_i-\mathrm{y}_i)^2}$로 계산한다. 기계 학습에서는 $d$=수백 ~ 수만에 달하는 매우 고차원 특징 공간의 데이터를 주로 다룬다.
+일반적으로 $d$차원 상의 두 점의 거리는 $d\mathbf{(x,y)}=\sqrt{\sum_{i=1}^d (\mathrm{x}_i-\mathrm{y}_i)^2}$로 계산한다. 기계 학습에서는 $d$=수백 ~ 수만에 달하는 매우 고차원 특징 공간의 데이터를 주로 다룬다.
 
 ### 3.3.2 연상 데이터 사례 : 필기 숫자
 MNIST 데이터셋은 미국 국립표준기술연구소(NIST)에서 미국인을 대상으로 수집한 필기 숫자 데이터이다.
@@ -336,5 +336,29 @@ a는 ***선형 모델(linear model)*** 로 쉽게 분류할 수 있는 상황이
 컴퓨터 프로그래밍에도 패턴이 있다. 이 패턴을 잘 기억하고 따라 하는 것은 좋은 프로그래머로 성장하는 지름길이다.
 
 ```python
+from sklearn import datasets
+from sklearn import svm
 
+digit = datasets.load_digits()
+
+# svm의 분류기 모델 SC를 학습
+s = svm.SVC(gamma=0.1, C=10)
+s.fit(digit.data, digit.target)
+
+# 훈련 집합의 앞에 있는 샘플 3개를 새로운 샘플로 간주하고 인식해봄
+new_d = [digit.data[0], digit.data[1],digit.data[2]]
+res = s.predict(new_d)
+print(f'예측값은 {res}')
+print(f'참값은 {digit.target[0], digit.target[1],digit.target[2]}')
+
+# 훈련 집합을 테스트 집합으로 간주하여 인식해보고 정확률을 측정
+res = s.predict(digit.data)
+# 아래 코드와 같음
+correct = [i for i in range(len(res)) if res[i]==digit.target[i]]
+# correct = []
+# for i in range(len(res)):
+#     if res[i] == digit.target[i]:
+#         correct.append(i)
+accuracy = len(correct)/len(res)    # 일치하는 값을 일치값으로 나눔
+print(f"화소 특징을 사용했을 때 정확률 = {accuracy*100}%")
 ```
