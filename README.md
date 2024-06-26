@@ -362,3 +362,87 @@ correct = [i for i in range(len(res)) if res[i]==digit.target[i]]
 accuracy = len(correct)/len(res)    # 일치하는 값을 일치값으로 나눔
 print(f"화소 특징을 사용했을 때 정확률 = {accuracy*100}%")
 ```
+출력
+```
+예측값은 [0 1 2]
+참값은 (0, 1, 2)
+화소 특징을 사용했을 때 정확률 = 100.0%
+```
+정확률이 100%인 이유는 데이터가 단순하고 학습에 활용한 훈련 집합으로 테스트했기 때문이다.
+
+## 3.6 성능 측정
+기계 학습에는 SVM뿐만 아니라 K-NN, 결정트리(decision tree), 랜덤 포리스트(random forest), 신경망, 딥러닝 등 아주 많은 모델을 사용할 수 있다, 이 작업을 ***모델 선택(model selection)*** 이라고 한다. 모델 선택을 하려면 여러 모델의 성능을 견주어 가장 좋은 것을 선택해야 하기 때문에 객관적인 성능 측정이 매우 중요하다.
+
+완성된 시스템을 현장에 설치할지 여부를 판단할 때에도 성능 측정은 핵심적인 사항이다. 성능을 제대로 평가하려면 적절한 평가 기준이 있어야 한다. 또한 모델을 학습하는 과정에서 사용한 훈련 집합 외의 새로운 데이터 집합으로 성능을 측정해야 한다. 이처럼 새로운 데이터로 성능을 측정하는 일을 ***일반화(generalization) 능력 측정*** 이라고 한다.
+
+### 3.6.1 혼동 행렬과 성능 측정 기준
+혼돈행렬(confusion matrix)은 부류별로 옳은 분류와 틀린 분류의 개수를 기록한 행렬이다. 긍정을 긍정으로 예측하면 ***참 긍정(TP_True Positive)*** , 긍정을 부정으로 잘못 예측하면 ***거짓 부정(FN_False_negative)*** , 부정을 긍정으로 잘못 예측하면 ***거짓 긍정(FP_False_Positive)*** , 부정을 부정으로 예측하면 ***참 부정(TN_True Negative)***이라 부른다.
+<table>
+    <tr>
+        <td rowspan="2" colspan="2"></td>
+        <th colspan="6" style="text-align: center;">참값(그라운드 트루스)</th>
+    </tr>
+    <tr>
+        <td>부류1</td>
+        <td>부류2</td>
+        <td>$\dots$</td>
+        <td>부류j</td>
+        <td>$\dots$</td>
+        <td>부류c</td>
+    </tr>
+    <tr>
+        <th rowspan="6">예측한 부류</th>
+        <td>부류1</td>
+        <td>$n_{11}$</td>
+        <td>$n_{12}$</td>
+        <td></td>
+        <td>$n_{1j}$</td>
+        <td></td>
+        <td>$n_{1c}$</td>
+    </tr>
+    <tr>
+        <td>부류2</td>
+        <td>$n_{21}$</td>
+        <td>$n_{22}$</td>
+        <td></td>
+        <td>$n_{2j}$</td>
+        <td></td>
+        <td>$n_{2c}$</td>
+    </tr>
+    <tr>
+        <td>$\dots$</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>부류i</td>
+        <td>$n_{i1}$</td>
+        <td>$n_{i2}$</td>
+        <td></td>
+        <td>$n_{ij}$</td>
+        <td></td>
+        <td>$n_{ic}$</td>
+    </tr>
+    <tr>
+        <td>$\dots$</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>부류c</td>
+        <td>$n_{c1}$</td>
+        <td>$n_{c2}$</td>
+        <td></td>
+        <td>$n_{cj}$</td>
+        <td></td>
+        <td>$n_{cc}$</td>
+    </tr>
+</table>
