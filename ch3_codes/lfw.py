@@ -3,6 +3,7 @@ from sklearn import datasets # 데이터셋 불러오기
 import matplotlib.pyplot as plt # matplot으로 데이터 시각화
 
 lfw = datasets.fetch_lfw_people(min_faces_per_person=70, resize=0.4) #데이터 불러오기
+print(lfw.DESCR)
 
 plt.figure(figsize=(20,5)) # matplot 캔버스 크기 지정
 
