@@ -375,12 +375,12 @@ print(f"화소 특징을 사용했을 때 정확률 = {accuracy*100}%")
 
 완성된 시스템을 현장에 설치할지 여부를 판단할 때에도 성능 측정은 핵심적인 사항이다. 성능을 제대로 평가하려면 적절한 평가 기준이 있어야 한다. 또한 모델을 학습하는 과정에서 사용한 훈련 집합 외의 새로운 데이터 집합으로 성능을 측정해야 한다. 이처럼 새로운 데이터로 성능을 측정하는 일을 ***일반화(generalization) 능력 측정*** 이라고 한다.
 
-### 3.6.1 혼동 행렬과 성능 측정 기준
-혼돈행렬(confusion matrix)은 부류별로 옳은 분류와 틀린 분류의 개수를 기록한 행렬이다. 긍정을 긍정으로 예측하면 ***참 긍정(TP_True Positive)*** , 긍정을 부정으로 잘못 예측하면 ***거짓 부정(FN_False_negative)*** , 부정을 긍정으로 잘못 예측하면 ***거짓 긍정(FP_False_Positive)*** , 부정을 부정으로 예측하면 ***참 부정(TN_True Negative)***이라 부른다.
-<table>
+### 3.6.1 혼동돈행렬과 성능 측정 기준
+혼동행렬(confusion matrix)은 부류별로 옳은 분류와 틀린 분류의 개수를 기록한 행렬이다. 긍정을 긍정으로 예측하면 ***참 긍정(TP_True Positive)*** , 긍정을 부정으로 잘못 예측하면 ***거짓 부정(FN_False_negative)*** , 부정을 긍정으로 잘못 예측하면 ***거짓 긍정(FP_False_Positive)*** , 부정을 부정으로 예측하면 ***참 부정(TN_True Negative)***이라 부른다.
+<table width="40%" style="display: inline-block;">
     <tr>
         <td rowspan="2" colspan="2"></td>
-        <th colspan="6" style="text-align: center;">참값(그라운드 트루스)</th>
+        <th colspan="6" style="text-align: center; ">참값(그라운드 트루스)</th>
     </tr>
     <tr>
         <td>부류1</td>
@@ -391,7 +391,7 @@ print(f"화소 특징을 사용했을 때 정확률 = {accuracy*100}%")
         <td>부류c</td>
     </tr>
     <tr>
-        <th rowspan="6">예측한 부류</th>
+        <th rowspan="6" style="writing-mode: vertical-lr;">예측한 부류</th>
         <td>부류1</td>
         <td>$n_{11}$</td>
         <td>$n_{12}$</td>
@@ -446,3 +446,83 @@ print(f"화소 특징을 사용했을 때 정확률 = {accuracy*100}%")
         <td>$n_{cc}$</td>
     </tr>
 </table>
+
+<table width="40%" style="display: inline-block;">
+    <tr>
+        <td rowspan="2" colspan="2"></td>
+        <th colspan="6" style="text-align: center; ">그라운드 트루스</th>
+    </tr>
+    <tr>
+        <td>긍정</td>
+        <td>부정</td>
+    </tr>
+    <tr>
+        <th rowspan="6" style="writing-mode: vertical-lr;">예측값</th>
+        <td>긍정</td>
+        <td>TP</td>
+        <td>FP</td>
+    </tr>
+    <tr>
+        <td>부정</td>
+        <td>FN</td>
+        <td>TN</td>
+</table>  
+
+가장 널리 쓰이는 성능 측정 기준은 ***정확률(accuracy)*** 이다.
+$$정확률 = \frac{맞힌 샘플 수}{전체 샘플 수}=\frac{대각선 샘플 수}{전체 샘플 수}$$
+
+정확률은 가장 널리 쓰이지만, 2부류 분류 문제에서는 종종 한계를 드러낸다. 예를 들어 의사가 환자를 진료하는 경우, 정산인이 암환자보다 훨씬 많기 때문에 모두 정상인이라고 진단해도 정확률이 꽤 높다. 가령 암 환자가 200명에 한 명 꼴인 상황에서 모두 정상으로 판정하면 정확률이 99.5%가 된다. 따라서 의사의 환자 진료와 같은 2부류 분류 문제에서는 ***특이도(specificity)*** 와 ***민감도(sensitivity)*** 를 성능 기준으로 사용한다.
+$$특이도 = \frac{TN}{TN+FP}, 민감도=\frac{TP}{TP+FN}$$
+> 특이도: 참값이 부정인것 중에 예측,참 모두 부정, 민감도: 참값이 긍정인것 중에 예측,참 모두 긍정
+
+웹에서 정보 검색을 수행하거나 영상에서 물체 검출을 하는 경우에는 ***정밀도(precision)*** 와 ***재현율(recall)*** 을 주로 사용한다.
+$$정밀도 = \frac{TP}{TP+FP}, 민감도=\frac{TP}{TP+FN}$$
+> 정밀도: 예측값이 긍정인것 중에 예측, 참 모두 긍정, 민감도: 참값이 긍정인것 중에 예측, 참 모두 긍정
+
+### 3.6.2 훈련/검증/테스트 집합으로 쪼개기
+
+객관적인 성능 측정을 위한 한 가지 좋은 방법은 데이터를 적절한 비율로 ***훈련 집합(train set)*** , ***검증 집합(validation set)*** , ***테스트 집합(test set)*** 으로 나누어 사용하는 것이다. 여러 모델을 학습하고 성능을 비교할 때는 훈련 집합과 검증 집합을 사용한다. 모델별로 훈련 후 검증 집합을 사용할때 정확률을 측정하고 정확률이 가장 높은 모델을 최종 선택하여 모델 선택을 마친다. 이렇게 선택된 모델에 대해 이제껏 한 번도 사용하지 않고 남겨둔 테스트 집합으로 성능을 측정한다. 이 성능이 일정 기준을 넘으면 합격 판정을 하고 현장에 설치한다.
+
+```python
+from sklearn import datasets
+from sklearn import svm
+from sklearn.model_selection import train_test_split
+import numpy as np
+
+# 데이터셋을 읽고 훈련 집합과 테스트 집합으로 분할
+digit = datasets.load_digits()
+x_train, x_test, y_train, y_test = train_test_split(digit.data, digit.target, train_size=0.6)
+
+# svm의 분류 모델 SVC를 학습
+s = svm.SVC(gamma=0.001)
+s.fit(x_train, y_train)
+
+res = s.predict(x_test)
+
+# 혼동 행렬 구함
+conf = np.zeros((10,10))
+for i in range(len(res)):
+    conf[res[i]][y_test[i]]+=1
+print(conf)
+
+# 정확률 측정하고 출력
+no_correct = 0
+for i in range(10):
+    no_correct += conf[i][i]
+accuracy = no_correct/len(res)
+print(f'테스트 집합에 대한 정확률은 {accuracy*100}%입니다.')
+```
+출력
+```
+[[54.  0.  0.  0.  0.  0.  0.  0.  0.  0.]
+ [ 0. 74.  0.  0.  0.  0.  1.  0.  0.  0.]
+ [ 0.  0. 63.  0.  0.  0.  0.  0.  0.  0.]
+ [ 0.  0.  0. 81.  0.  0.  0.  0.  0.  1.]
+ [ 0.  0.  0.  0. 75.  0.  0.  0.  0.  0.]
+ [ 0.  0.  0.  1.  0. 70.  0.  0.  0.  2.]
+ [ 0.  0.  0.  0.  0.  0. 77.  0.  0.  0.]
+ [ 0.  0.  0.  0.  0.  0.  0. 71.  0.  1.]
+ [ 0.  0.  0.  0.  1.  0.  0.  0. 66.  0.]
+ [ 0.  0.  0.  0.  0.  1.  0.  0.  0. 80.]]
+테스트 집합에 대한 정확률은 98.88734353268428%입니다.
+```

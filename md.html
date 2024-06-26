@@ -1,69 +1,102 @@
-<table>
-    <tr>
-        <td rowspan="2" colspan="2"></td>
-        <th colspan="6" style="text-align: center;">참값(그라운드 트루스)</th>
-    </tr>
-    <tr>
-        <td>부류1</td>
-        <td>부류2</td>
-        <td>$\dots$</td>
-        <td>부류j</td>
-        <td>$\dots$</td>
-        <td>부류c</td>
-    </tr>
-    <tr>
-        <th rowspan="6">예측한 부류</th>
-        <td>부류1</td>
-        <td>$n_{11}$</td>
-        <td>$n_{12}$</td>
-        <td></td>
-        <td>$n_{1j}$</td>
-        <td></td>
-        <td>$n_{1c}$</td>
-    </tr>
-    <tr>
-        <td>부류2</td>
-        <td>$n_{21}$</td>
-        <td>$n_{22}$</td>
-        <td></td>
-        <td>$n_{2j}$</td>
-        <td></td>
-        <td>$n_{2c}$</td>
-    </tr>
-    <tr>
-        <td>$\dots$</td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-    </tr>
-    <tr>
-        <td>부류i</td>
-        <td>$n_{i1}$</td>
-        <td>$n_{i2}$</td>
-        <td></td>
-        <td>$n_{ij}$</td>
-        <td></td>
-        <td>$n_{ic}$</td>
-    </tr>
-    <tr>
-        <td>$\dots$</td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-    </tr>
-    <tr>
-        <td>부류c</td>
-        <td>$n_{c1}$</td>
-        <td>$n_{c2}$</td>
-        <td></td>
-        <td>$n_{cj}$</td>
-        <td></td>
-        <td>$n_{cc}$</td>
-    </tr>
-</table>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <table width="40%" style="display: inline-block;">
+        <tr>
+            <td rowspan="2" colspan="2"></td>
+            <th colspan="6" style="text-align: center; ">참값(그라운드 트루스)</th>
+        </tr>
+        <tr>
+            <td>부류1</td>
+            <td>부류2</td>
+            <td>$\dots$</td>
+            <td>부류j</td>
+            <td>$\dots$</td>
+            <td>부류c</td>
+        </tr>
+        <tr>
+            <th rowspan="6" style="writing-mode: vertical-lr;">예측한 부류</th>
+            <td>부류1</td>
+            <td>$n_{11}$</td>
+            <td>$n_{12}$</td>
+            <td></td>
+            <td>$n_{1j}$</td>
+            <td></td>
+            <td>$n_{1c}$</td>
+        </tr>
+        <tr>
+            <td>부류2</td>
+            <td>$n_{21}$</td>
+            <td>$n_{22}$</td>
+            <td></td>
+            <td>$n_{2j}$</td>
+            <td></td>
+            <td>$n_{2c}$</td>
+        </tr>
+        <tr>
+            <td>$\dots$</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>부류i</td>
+            <td>$n_{i1}$</td>
+            <td>$n_{i2}$</td>
+            <td></td>
+            <td>$n_{ij}$</td>
+            <td></td>
+            <td>$n_{ic}$</td>
+        </tr>
+        <tr>
+            <td>$\dots$</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>부류c</td>
+            <td>$n_{c1}$</td>
+            <td>$n_{c2}$</td>
+            <td></td>
+            <td>$n_{cj}$</td>
+            <td></td>
+            <td>$n_{cc}$</td>
+        </tr>
+    </table>
+
+    <table width="40%" style="display: inline-block;">
+        <tr>
+            <td rowspan="2" colspan="2"></td>
+            <th colspan="6" style="text-align: center; ">그라운드 트루스</th>
+        </tr>
+        <tr>
+            <td>긍정</td>
+            <td>부정</td>
+        </tr>
+        <tr>
+            <th rowspan="6" style="writing-mode: vertical-lr;">예측값</th>
+            <td>긍정</td>
+            <td>TP</td>
+            <td>FP</td>
+        </tr>
+        <tr>
+            <td>부정</td>
+            <td>FN</td>
+            <td>TN</td>
+    </table>
+</body>
+</html>
+
+g
